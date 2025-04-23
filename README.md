@@ -4,9 +4,8 @@ Find globalThis in any environment without polluting the namespace
 
 ```javascript
 
-
-   ;
-    (function(GLOBAL, CONTEXT, undefined) {
+   // # | Finds globalThis without polluting the global namespace | Adapted from https://mathiasbynens.be/notes/globalthis
+   ;;(function(GLOBAL, CONTEXT, undefined) {
 
         GLOBAL.TestingGlobalThis = GLOBAL;
         console.log(TestingGlobalThis); // window, node, etc
