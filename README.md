@@ -4,8 +4,8 @@ Find globalThis in any environment without polluting the namespace
 
 ```javascript
 
-   // # | Finds globalThis without polluting the global namespace | Adapted from https://mathiasbynens.be/notes/globalthis
-   ;;(function(GLOBAL, CONTEXT, undefined) {
+ // # | Finds globalThis without polluting the global namespace | Adapted from https://mathiasbynens.be/notes/globalthis
+    ;(function(GLOBAL, CONTEXT, undefined) {
 
         GLOBAL.TestingGlobalThis = GLOBAL;
         console.log(TestingGlobalThis); // window, node, etc
@@ -25,12 +25,13 @@ Find globalThis in any environment without polluting the namespace
                 // The previous line should have made `globalThis` a globally available variable, but it fails in Internet Explorer 10 and older.
                 // Detect this failure and fall back.
 
-                var __global__ = (typeof globalThis === 'undefined') ? getThis() : globalThis; // cache our `globalThis` locally to avoid polluting the namespace
+                var __global__ = (typeof globalThis === 'undefined') ? getThis() : globalThis; // cache our `globalThis` locally.
                 
-                delete __magic__.globalThis;       // clean up `globalThis` from global namespace (IE notwithstanding) as we're not strictly polyfilling it here.
-                delete Object.prototype.__magic__; // clean up `__magic__` from `Object.prototype`.
+                // Clean up namespaces.
+                try { delete __magic__.globalThis; } catch (e) {} // try-catch in case IE gets quirky
+                delete Object.prototype.__magic__; 
 
-                return __global__;                 // console.log(__global__, typeof globalThis === 'undefined'); // globalThis, true
+                return __global__;  // console.log(__global__, typeof globalThis === 'undefined'); // the global this, true
 
             } catch (e) {
                 return getThis(); // In IE8, Object.defineProperty only works on DOM objects. If we hit this code path, assume `window` exists.
@@ -51,4 +52,5 @@ Find globalThis in any environment without polluting the namespace
 
         })()
     );
+
 ```
