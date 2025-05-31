@@ -1,8 +1,8 @@
 // # | Finds globalThis without polluting the global namespace | Adapted from https://mathiasbynens.be/notes/globalthis
 ;(function(GLOBAL, CONTEXT, undefined) {
 
-    GLOBAL.TestingGlobalThis = GLOBAL;
-    console.log(TestingGlobalThis); // window, node, etc
+    //GLOBAL.TestingGlobalThis = GLOBAL;
+    // console.log(TestingGlobalThis); // window, node, etc
 
 })(
     (function() {
@@ -33,7 +33,8 @@
 
         function getThis() {
             // if we're here it's almost certainly Internet Explorer so check for a window.
-            if (typeof window !== 'undefined' && window && window.window === window && typeof window.document !== 'undefined') {
+            // window.window !== window in IE<9
+            if (typeof window !== 'undefined' && window && window.window && typeof window.document !== 'undefined') {
                 return window; // if this much effort was taken to simulate a browser environment, assume they know what they're doing
             } else {
                 try {
