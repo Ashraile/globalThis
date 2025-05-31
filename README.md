@@ -39,7 +39,7 @@ Find globalThis in any environment without polluting the namespace
 
             function getThis() {
                 // if we're here it's almost certainly Internet Explorer so check for a window.
-                if (typeof window !== 'undefined' && window && window.window === window && typeof window.document !== 'undefined') {
+                if (typeof window !== 'undefined' && window && window.window && typeof window.document !== 'undefined') {
                     return window; // if this much effort was taken to simulate a browser environment, assume they know what they're doing
                 } else {
                     try {
